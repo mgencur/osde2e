@@ -31,14 +31,16 @@ PULL_SECRET_FILE="/usr/local/osde2e-credentials/stage-ocm-pull-secret"
 
 # just automating the steps in https://docs.microsoft.com/en-us/azure/openshift/tutorial-create-cluster
 
-echo "Pulling ARO-RP"
-RP_COMMIT=$(curl --silent https://arorpversion.blob.core.windows.net/rpversion/$LOCATION)
-git clone https://github.com/Azure/ARO-RP.git
-cd ARO-RP
-git checkout $RP_COMMIT
+# echo "Pulling ARO-RP"
+# RP_COMMIT=$(curl --silent https://arorpversion.blob.core.windows.net/rpversion/$LOCATION)
+# git clone https://github.com/Azure/ARO-RP.git
+# cd ARO-RP
+# git checkout $RP_COMMIT
 
-echo "Installing AzureCLI Extension"
-make az
+# echo "Installing AzureCLI Extension"
+# make az
+
+curl -L https://aka.ms/InstallAzureCli | bash
 
 cd ..
 echo "Logging into Azure"
@@ -87,7 +89,7 @@ az network vnet subnet update \
     --disable-private-link-service-network-policies true
 
 
-CREATE_CMD="az aro create --resource-group \"$RESOURCEGROUP_NAME\" --name \"$CLUSTER_NAME\" --vnet aro-vnet --master-subnet master-subnet --worker-subnet worker-subnet --disk-encryption-set \"$DES_ID\" --master-encryption-at-host --worker-encryption-at-host "
+CREATE_CMD="az aro create --resource-group \"$RESOURCEGROUP_NAME\" --name \"$CLUSTER_NAME\" --vnet aro-vnet --master-subnet master-subnet --worker-subnet worker-subnet"
 
 if [ "$PULL_SECRET_FILE" != "" ];
 then
