@@ -31,16 +31,14 @@ PULL_SECRET_FILE="/usr/local/osde2e-credentials/stage-ocm-pull-secret"
 
 # just automating the steps in https://docs.microsoft.com/en-us/azure/openshift/tutorial-create-cluster
 
-# echo "Pulling ARO-RP"
-# RP_COMMIT=$(curl --silent https://arorpversion.blob.core.windows.net/rpversion/$LOCATION)
-# git clone https://github.com/Azure/ARO-RP.git
-# cd ARO-RP
-# git checkout $RP_COMMIT
+echo "Pulling ARO-RP"
+RP_COMMIT=$(curl --silent https://arorpversion.blob.core.windows.net/rpversion/$LOCATION)
+git clone https://github.com/Azure/ARO-RP.git
+cd ARO-RP
+git checkout $RP_COMMIT
 
-# echo "Installing AzureCLI Extension"
-# make az
-
-curl -L https://aka.ms/InstallAzureCli | bash
+echo "Installing AzureCLI Extension"
+make az
 
 cd ..
 echo "Logging into Azure"
